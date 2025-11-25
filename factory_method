@@ -1,0 +1,34 @@
+from abc import ABC, abstractmethod
+
+
+class Document(ABC):
+    @abstractmethod
+    def get_type(self) -> str:
+        pass
+
+class PDFDocument(Document):
+    def get_type(self) -> str:
+        return "PDF документ"
+
+class WordDocument(Document):
+    def get_type(self) -> str:
+        return "Word документ"
+
+
+class Application(ABC):
+    @abstractmethod
+    def create_document(self) -> Document:
+        pass
+
+    def new_document(self) -> str:
+        doc = self.create_document()
+        return f"Создан {doc.get_type()}"
+
+
+class PDFApplication(Application):
+    def create_document(self) -> Document:
+        return PDFDocument()
+
+class WordApplication(Application):
+    def create_document(self) -> Document:
+        return WordDocument()
